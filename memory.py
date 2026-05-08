@@ -15,13 +15,22 @@ from turtle import *
 from freegames import path
 
 car = path('car.gif')
-tiles = list(range(32)) * 2
+
+symbols = [
+    '!', '@', '#', '$', '%', '&', '*', '+',
+    '?', '/', '=', '<', '>', '^', '~', '|',
+    ':', ';', '[', ']', '{', '}', '(', ')',
+    '-', '_', '.', ',', 'A', 'B', 'C', 'D'
+]
+
+tiles = symbols * 2
+
+
 state = {'mark': None, 'taps': 0}
 hide = [True] * 64
 
 
 def square(x, y):
-    """Draw white square with black outline at (x, y)."""
     up()
     goto(x, y)
     down()
@@ -34,17 +43,14 @@ def square(x, y):
 
 
 def index(x, y):
-    """Convert (x, y) coordinates to tiles index."""
     return int((x + 200) // 50 + ((y + 200) // 50) * 8)
 
 
 def xy(count):
-    """Convert tiles count to (x, y) coordinates."""
     return (count % 8) * 50 - 200, (count // 8) * 50 - 200
 
 
 def tap(x, y):
-    """Update mark and hidden tiles based on tap."""
     if not (-200 <= x < 200 and -200 <= y < 200):
         return
 
@@ -62,7 +68,6 @@ def tap(x, y):
 
 
 def draw():
-    """Draw image and tiles."""
     clear()
     goto(0, 0)
     shape(car)
@@ -78,10 +83,10 @@ def draw():
     if mark is not None and hide[mark]:
         x, y = xy(mark)
         up()
-        goto(x + 25, y + 8)
+        goto(x + 25, y + 5)
         color('black')
-        write(tiles[mark], align="center", font=('Arial', 30, 'normal'))
-    up()
+        write(tiles[mark], align="center", font=('Arial', 26, 'normal'))    
+        up()
     goto(-200,200)
     color('black')
     write(f"Taps: {state['taps']}", font=('Arial', 14, 'bold'))
